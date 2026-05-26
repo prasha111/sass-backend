@@ -1,14 +1,41 @@
 // models/Site.js
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+import mongoose from "mongoose";
 
-const siteSchema = new Schema(
+const siteSchema = new mongoose.Schema(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    domain: { type: String, required: true, trim: true },
-    displayName: { type: String, required: true, trim: true }
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    domain: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    displayName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    region: {
+      type: String,
+      default: "Global",
+      trim: true,
+    },
+    status: {
+      type: String,
+      enum: ["Healthy", "Warning"],
+      default: "Healthy",
+    },
+    banner: {
+      type: String,
+      enum: ["Draft", "Active"],
+      default: "Draft",
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Site", siteSchema);
+const Site = mongoose.model("Site", siteSchema);
+export default Site;

@@ -1,19 +1,34 @@
-// models/Scan.js
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
 
-const scanSchema = new Schema(
+const scanSchema = new mongoose.Schema(
   {
-    siteId: { type: Schema.Types.ObjectId, ref: "Site", required: true },
-    pageUrl: { type: String, required: true, trim: true },
+    site: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Site",
+      required: true,
+      index: true,
+    },
+    startedAt: {
+      type: Date,
+      default: Date.now,
+    },
+    finishedAt: {
+      type: Date,
+    },
     status: {
       type: String,
-      enum: ["pending", "success", "failed"],
-      default: "pending"
+      enum: ["pending", "running", "completed", "failed"],
+      default: "pending",
     },
-    scannedAt: { type: Date, default: Date.now }
+    cookieCount: {
+      type: Number,
+      default: 0,
+    },
+    error: {
+      type: String,
+    },
   },
-  { timestamps: true }
+  { timestamps: true } // optional createdAt/updatedAt
 );
 
 module.exports = mongoose.model("Scan", scanSchema);

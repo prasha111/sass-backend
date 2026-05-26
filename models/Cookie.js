@@ -12,8 +12,15 @@ const cookieSchema = new Schema(
     expires: { type: Date },
     category: {
       type: String,
-      enum: ["necessary", "analytics", "marketing", "preferences", "unknown"],
-      default: "unknown"
+      enum: [
+        "necessary",
+        "preferences",
+        "functional",
+        "analytics",
+        "marketing",
+        "unknown",
+      ],
+      default: "unknown",
     }
   },
   { timestamps: true }
